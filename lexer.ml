@@ -1,14 +1,6 @@
-type token =
-| SPACE
-| TAB
-| LINEFEED
-| EOF
+open Type
 
-let print = function
-| SPACE -> Printf.printf "SPACE\n"
-| TAB -> Printf.printf "TAB\n"
-| LINEFEED -> Printf.printf "LINEFEED\n"
-| EOF -> Printf.printf "EOF\n"
+
 
 exception Lexical_error of string
 
@@ -18,13 +10,12 @@ let newline () = incr line_number
 
 let error msg = raise (Lexical_error (msg ^ " at line " ^ string_of_int !line_number))
 
-let rec get_token stream =
+let rec get_token stream output =
   try
     let next () = Stream.next stream in
-    let char_to_string c = String.make 1 c in
     match next() with
-    |'S' -> SPACE
-    |'T' -> TAB
-    |'L' -> LINEFEED
-    | _ as c -> error("char non reconnu : " ^ char_to_string c)
-  with Stream.Failure -> EOF
+    |'S' -> get_token stream (SPACE :: output)
+    |'T' -> get_token stream (TAB :: output)
+    |'\n' -> get_token stream (LINEFEED :: output)
+    | _ -> get_token stream output
+  with Stream.Failure -> List.rev output

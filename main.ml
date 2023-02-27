@@ -17,11 +17,13 @@ let main () =
   and add_to_filenames = fun s -> filenames := s :: !filenames in
   Arg.parse specs add_to_filenames "Usage: prolog filename";
   let stream = concat_files !filenames |> Stream.of_string in
-  let rec loop token =
-    Lexer.print token;
-    if token <> Lexer.EOF then
-      Lexer.get_token stream |> loop
-  in
-  Lexer.get_token stream |> loop
 
-let () = main ()
+  let tokens = Lexer.get_token stream [] in 
+  (* List.map Type.print_token tokens; *)
+  
+  let instructions = Parser.parse_instruction tokens [] in 
+
+  List.map Type.print_instruction instructions
+
+
+let _ = main ()

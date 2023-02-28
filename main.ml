@@ -22,8 +22,10 @@ let main () =
   (* List.map Type.print_token tokens; *)
   
   let instructions = Parser.parse_instruction tokens [] in 
+  (* List.map Type.print_instruction instructions; *)
 
-  List.map Type.print_instruction instructions
+  Printf.printf "fn main() {\n\tlet mut stack = Vec::new();\n\tlet mut memory = Vec::new()\n\n";
+  Traductor.trad_instructions instructions
 
 
 let _ = main ()

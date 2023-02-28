@@ -16,10 +16,10 @@ type instruction =
   | Discard
   | Slide of int
   | Add
-  | Subtract
-  | Multiply
-  | Divide
-  | Modulo
+  | Sub
+  | Mult
+  | Div
+  | Mod
   | Store
   | Load
   | Label of string
@@ -41,18 +41,18 @@ let print_instruction = function
   | Swap        -> Printf.printf "Swap \n" 
   | Discard     -> Printf.printf "Discard \n"
   | Slide i     -> Printf.printf "Slide %d \n" i
-  | Add         -> Printf.printf "Add \n"
-  | Subtract    -> Printf.printf "Substract \n"
-  | Multiply    -> Printf.printf "Multiply \n"
-  | Divide      -> Printf.printf "Divide \n"
-  | Modulo      -> Printf.printf "Modulo \n"
+  | Add         -> Printf.printf "Addition \n"
+  | Sub    -> Printf.printf "Substraction \n"
+  | Mult    -> Printf.printf "Multiplication \n"
+  | Div      -> Printf.printf "Divide \n"
+  | Mod      -> Printf.printf "Modulo \n"
   | Store       -> Printf.printf "Store \n"
   | Load        -> Printf.printf "Load \n"
   | Label s     -> Printf.printf "Label %s \n" s
   | Call s      -> Printf.printf "Call %s \n" s
   | Jump s      -> Printf.printf "Jump %s \n" s
-  | JumpIfZero s -> Printf.printf "Jump0 %s \n" s
-  | JumpIfNeg s -> Printf.printf "JumpNeg %s \n" s
+  | JumpIfZero s -> Printf.printf "JumpIf0 %s \n" s
+  | JumpIfNeg s -> Printf.printf "JumpIfNeg %s \n" s
   | EndSub      -> Printf.printf "EndSub \n"
   | EndProg     -> Printf.printf "EndProg \n"
   | OutputChar  -> Printf.printf "OutputChar \n"

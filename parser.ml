@@ -1,6 +1,5 @@
 open Type
 
-
 let rec get_value tokens res sign =
   match tokens with
   | [] -> Lexer.error("Number not ended")
@@ -41,10 +40,10 @@ let rec parse_instruction tokens output =
     if number < 0 then Lexer.error("Slide number negative") else parse_instruction newRest (Slide number :: output)
   end
   | TAB :: SPACE :: SPACE :: SPACE :: rest -> parse_instruction rest (Add :: output)
-  | TAB :: SPACE :: SPACE :: TAB :: rest -> parse_instruction rest (Subtract :: output)
-  | TAB :: SPACE :: SPACE :: LINEFEED :: rest -> parse_instruction rest (Multiply :: output)
-  | TAB :: SPACE :: TAB :: SPACE :: rest -> parse_instruction rest (Divide :: output)
-  | TAB :: SPACE :: TAB :: TAB :: rest -> parse_instruction rest (Modulo :: output)
+  | TAB :: SPACE :: SPACE :: TAB :: rest -> parse_instruction rest (Sub :: output)
+  | TAB :: SPACE :: SPACE :: LINEFEED :: rest -> parse_instruction rest (Mult :: output)
+  | TAB :: SPACE :: TAB :: SPACE :: rest -> parse_instruction rest (Div :: output)
+  | TAB :: SPACE :: TAB :: TAB :: rest -> parse_instruction rest (Mod :: output)
   | TAB :: TAB :: SPACE :: rest -> parse_instruction rest (Store :: output)
   | TAB :: TAB :: TAB :: rest -> parse_instruction rest (Load :: output)
   | LINEFEED :: SPACE :: SPACE :: rest -> begin 

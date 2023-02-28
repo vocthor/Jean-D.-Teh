@@ -21,11 +21,11 @@ TSTTTT jumpifzero tttt
 TTTTSS jumpifneg ttss
 
 T
-endsub
-
-
-endprog T
+endsub T
 SS outputchar T
 ST outputnum T
 TS readchar T
 TT readnum
+
+
+endprog

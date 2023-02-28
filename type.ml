@@ -41,7 +41,7 @@ let print_instruction = function
   | Swap        -> Printf.printf "Swap \n" 
   | Discard     -> Printf.printf "Discard \n"
   | Slide i     -> Printf.printf "Slide %d \n" i
-  | Add         -> Printf.printf "ADd \n"
+  | Add         -> Printf.printf "Add \n"
   | Subtract    -> Printf.printf "Substract \n"
   | Multiply    -> Printf.printf "Multiply \n"
   | Divide      -> Printf.printf "Divide \n"

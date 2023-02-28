@@ -32,13 +32,13 @@ let rec parse_instruction tokens output =
   | SPACE :: LINEFEED :: SPACE :: rest -> parse_instruction rest (Dup :: output)
   | SPACE :: TAB :: SPACE :: rest -> begin
     let (number, newRest) = get_number rest in 
-    if number < 0 then Lexer.error("Copy number negative") else parse_instruction rest (Copy number :: output)
+    if number < 0 then Lexer.error("Copy number negative") else parse_instruction newRest (Copy number :: output)
   end
   | SPACE :: LINEFEED :: TAB :: rest -> parse_instruction rest (Swap :: output)
   | SPACE :: LINEFEED :: LINEFEED :: rest -> parse_instruction rest (Discard :: output)
   | SPACE :: TAB :: LINEFEED :: rest -> begin
     let (number, newRest) = get_number rest in 
-    if number < 0 then Lexer.error("Slide number negative") else parse_instruction rest (Slide number :: output)
+    if number < 0 then Lexer.error("Slide number negative") else parse_instruction newRest (Slide number :: output)
   end
   | TAB :: SPACE :: SPACE :: SPACE :: rest -> parse_instruction rest (Add :: output)
   | TAB :: SPACE :: SPACE :: TAB :: rest -> parse_instruction rest (Subtract :: output)
@@ -49,23 +49,23 @@ let rec parse_instruction tokens output =
   | TAB :: TAB :: TAB :: rest -> parse_instruction rest (Load :: output)
   | LINEFEED :: SPACE :: SPACE :: rest -> begin 
     let (label, newRest) = get_label rest "" in 
-    parse_instruction (List.tl rest) (Label label :: output)
+    parse_instruction newRest (Label label :: output)
   end
   | LINEFEED :: SPACE :: TAB :: rest -> begin 
-      let (label, newRest) = get_label rest "" in 
-      parse_instruction (List.tl rest) (Call label :: output)
+    let (label, newRest) = get_label rest "" in 
+    parse_instruction newRest (Call label :: output)
     end
   | LINEFEED :: SPACE :: LINEFEED :: rest -> begin 
     let (label, newRest) = get_label rest "" in 
-    parse_instruction (List.tl rest) (Jump label :: output)
+    parse_instruction newRest (Jump label :: output)
   end
   | LINEFEED :: TAB :: SPACE :: rest -> begin 
     let (label, newRest) = get_label rest "" in 
-    parse_instruction (List.tl rest) (JumpIfZero label :: output)
+    parse_instruction newRest (JumpIfZero label :: output)
   end
   | LINEFEED :: TAB :: TAB :: rest -> begin 
     let (label, newRest) = get_label rest "" in 
-    parse_instruction (List.tl rest) (JumpIfNeg label :: output)
+    parse_instruction newRest (JumpIfNeg label :: output)
   end
   | LINEFEED :: TAB :: LINEFEED :: rest -> parse_instruction rest (EndSub :: output)
   | LINEFEED :: LINEFEED :: LINEFEED :: rest -> parse_instruction rest (EndProg :: output)

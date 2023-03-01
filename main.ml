@@ -20,11 +20,11 @@ let main () =
 
   let tokens = Lexer.get_token stream [] in 
   (* List.map Type.print_token tokens; *)
-  
+
   let instructions = Parser.parse_instruction tokens [] in 
   (* List.map Type.print_instruction instructions; *)
 
-  Printf.printf "fn main() {\n\tlet mut stack = Vec::new();\n\tlet mut memory = Vec::new()\n\n";
+  Printf.printf "fn main() {\n\tlet mut stack : Vec<i32> = Vec::new();\n\tlet mut memory: Vec<i32> = Vec::new();\n\n";
   Traductor.trad_instructions instructions
 
 

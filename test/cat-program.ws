@@ -1,0 +1,17 @@
+
+SSS
+SSST
+T
+TSSSST
+TTTT
+SSSSST
+TTT
+TST
+
+S
+S
+
+SST
+
+
+

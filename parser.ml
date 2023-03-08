@@ -16,8 +16,8 @@ let get_number tokens =
 
 let rec get_label tokens (res : string) = 
   match tokens with
-  | SPACE :: rest -> get_label rest (res^"S")
-  | TAB :: rest -> get_label rest (res^"T")
+  | SPACE :: rest -> get_label rest (res^"s")
+  | TAB :: rest -> get_label rest (res^"t")
   | LINEFEED :: rest -> (res, rest)
   | [] -> Lexer.error("Label not ended")
 

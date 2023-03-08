@@ -2,7 +2,7 @@ open Type
 
 let rec trad_instructions instructions oc =
   match instructions with
-  | [] -> Lexer.error("The program does not contain a marker for its end") 
+  | [] -> Printf.fprintf oc "}"
   | Push n :: rest      -> Printf.fprintf oc "\tstack.push(%d); // push\n" n ; trad_instructions rest oc
   | Dup :: rest         -> Printf.fprintf oc "\tlet n = stack.pop().unwrap(); stack.push(n); stack.push(n); // dup\n" ; trad_instructions rest oc
   | Copy n :: rest      -> Printf.fprintf oc "\tlet nth = stack[%d-1]; stack.push(nth); // copy\n" n ; trad_instructions rest oc
@@ -18,12 +18,12 @@ let rec trad_instructions instructions oc =
   | Load :: rest        -> Printf.fprintf oc "\tlet addr = stack.pop().unwrap(); let val = memory[&addr]; stack.push(val); // load\n" ; trad_instructions rest oc
   | Label l :: rest     -> Printf.fprintf oc "\t%s(stack, memory);\n}\nfn %s(stack : &mut Vec<i32>, memory: &mut HashMap<i32, i32>) { // label\n" l l ; trad_instructions rest oc
   | Call l :: rest      -> Printf.fprintf oc "\t%s(stack, memory);\n}\nfn %s(stack : &mut Vec<i32>, memory: &mut HashMap<i32, i32>) { // call\n" l l; trad_instructions rest oc
-  | Jump l :: rest      -> Printf.fprintf oc "\telse {%s(stack, memory);} // jump\n" l ; trad_instructions rest oc
+  | Jump l :: rest      -> Printf.fprintf oc "\t%s(stack, memory); // jump\n" l ; trad_instructions rest oc
   | JumpIfZero l :: rest-> Printf.fprintf oc "\tif stack.pop().unwrap() == 0 {%s(stack, memory);} // jump if zero\n" l ; trad_instructions rest oc
   | JumpIfNeg l :: rest -> Printf.fprintf oc "\tif stack.pop().unwrap() < 0 {%s(stack, memory));} // jump if neg\n" l ; trad_instructions rest oc
-  | EndSub :: rest      -> Printf.fprintf oc "return;\n //end sub routine" ; trad_instructions rest oc
-  | EndProg :: _        -> Printf.fprintf oc "}\n"
-  | OutputChar :: rest  -> Printf.fprintf oc "\tprintln!(\"{}\", stack.pop().unwrap() as u8 as char); // output char\n" ; trad_instructions rest oc
+  | EndSub :: rest      -> Printf.fprintf oc "\treturn;\n //end sub routine\n" ; trad_instructions rest oc
+  | EndProg :: rest     -> Printf.fprintf oc "\tprocess::exit(0); // end prog\n" ; trad_instructions rest oc
+  | OutputChar :: rest  -> Printf.fprintf oc "\tprint!(\"{}\", stack.pop().unwrap() as u8 as char); // output char\n" ; trad_instructions rest oc
   | OutputNum :: rest   -> Printf.fprintf oc "\tprintln!(\"{}\", stack.pop().unwrap()); // output num\n" ; trad_instructions rest oc
   | ReadChar :: rest    -> Printf.fprintf oc "\tlet mut input = String::new();io::stdin().read_line(&mut input).expect(\"Error: unable to read user char input\");let addr: i32 = stack.pop().unwrap();memory.insert(addr,input.chars().nth(0).unwrap() as i32); // read char\n" ; trad_instructions rest oc
   | ReadNum :: rest     -> Printf.fprintf oc "READ NUM TODO\n" ; trad_instructions rest oc

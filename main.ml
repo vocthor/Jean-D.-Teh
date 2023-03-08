@@ -6,27 +6,28 @@ let load_file f =
     close_in ic;
     s
 
-let concat_files filenames =
-  List.map load_file filenames
-  |> Bytes.concat Bytes.empty
-  |> Bytes.to_string
+exception Args_error of string
 
 let main () =
-  let oc = open_out "./test/filename.rs" in
   let filenames = ref [] in
-  let specs = []
-  and add_to_filenames = fun s -> filenames := s :: !filenames in
+  let specs = [] in
+  let add_to_filenames = fun s -> filenames := s :: !filenames in
   Arg.parse specs add_to_filenames "Usage: prolog filename";
-  let stream = concat_files !filenames |> Stream.of_string in
+  let wsfilename = if (List.length !filenames) > 1 then raise (Args_error "Too many arguments, usage : ./main.native file.ws") else List.nth !filenames 0 in 
+  let stream = load_file wsfilename |> Bytes.to_string |> Stream.of_string in
 
   let tokens = Lexer.get_token stream [] in 
   (* List.map Type.print_token tokens; *)
-
+  
   let instructions = Parser.parse_instruction tokens [] in 
   (* List.map Type.print_instruction instructions; *)
-
+  
+  let regex = Str.regexp {|.ws|} in 
+  let rsfilename = Str.replace_first regex {|.rs|} wsfilename in
+  let oc = open_out rsfilename in
   Printf.fprintf oc "use std::collections::HashMap;\n";
   Printf.fprintf oc "use std::io;\n\n";
+  Printf.fprintf oc "use std::process;\n\n";
   Printf.fprintf oc "fn main() {\n";
   Printf.fprintf oc "\tlet mut stack : Vec<i32> = Vec::new();\n";
   Printf.fprintf oc "\tlet mut memory: HashMap<i32, i32> = HashMap::new();\n\n";

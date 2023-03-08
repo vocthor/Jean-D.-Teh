@@ -1,14 +1,18 @@
 use std::collections::HashMap;
 use std::io;
 
+use std::process;
+
 fn main() {
     let mut stack: Vec<i32> = Vec::new();
     let mut memory: HashMap<i32, i32> = HashMap::new();
 
-    S(&mut stack, &mut memory);
+    main2(&mut stack, &mut memory);
 }
-fn S(stack: &mut Vec<i32>, memory: &mut HashMap<i32, i32>) {
-    // println!("in S");
+fn main2(stack: &mut Vec<i32>, memory: &mut HashMap<i32, i32>) {
+    s(stack, memory);
+}
+fn s(stack: &mut Vec<i32>, memory: &mut HashMap<i32, i32>) {
     // label
     stack.push(1); // push
     let mut input = String::new();
@@ -18,20 +22,21 @@ fn S(stack: &mut Vec<i32>, memory: &mut HashMap<i32, i32>) {
     let addr: i32 = stack.pop().unwrap();
     memory.insert(addr, input.chars().nth(0).unwrap() as i32); // read char
     stack.push(1); // push
-    // println!("pushed");
     let addr = stack.pop().unwrap();
     let val = memory[&addr];
     stack.push(val); // load
-    println!("{}", stack.pop().unwrap() as u8 as char); // output char
+    print!("{}", stack.pop().unwrap() as u8 as char); // output char
     stack.push(1); // push
     let addr = stack.pop().unwrap();
     let val = memory[&addr];
     stack.push(val); // load
-    if stack.pop().unwrap() as u8 as char == '0' {
-        T(stack, memory);
+    if stack.pop().unwrap() == 0 {
+        t(stack, memory);
     } // jump if zero
-    S(stack,memory); // jump
-    T(stack, memory);
+    s(stack, memory); // jump
+    t(stack, memory);
 }
-fn T(stack: &mut Vec<i32>, memory: &mut HashMap<i32, i32>) { // label
+fn t(stack: &mut Vec<i32>, memory: &mut HashMap<i32, i32>) {
+    // label
+    process::exit(0); // end prog
 }

@@ -29,6 +29,8 @@ let main () =
   Printf.fprintf oc "use std::io;\n\n";
   Printf.fprintf oc "use std::process;\n\n";
   Printf.fprintf oc "fn main() {\n";
+  Printf.fprintf oc "\ttype Binop = fn(&mut Vec<i32>, &mut HashMap<i32, i32>);";
+  Printf.fprintf oc "\tlet mut func_refs : Vec<Binop> = Vec::new();\n";
   Printf.fprintf oc "\tlet mut stack : Vec<i32> = Vec::new();\n";
   Printf.fprintf oc "\tlet mut memory: HashMap<i32, i32> = HashMap::new();\n\n";
   Printf.fprintf oc "\tmain2(&mut stack, &mut memory);\n}\n";

@@ -1,0 +1,19 @@
+SSSTSSS
+push 8 SSSTS
+push 2 TSSS add T
+ST outputnum SSSTSSS
+push 8 SSSTS
+push 2 TSST sub T
+ST outputnum SSSTSSS
+push 8 SSSTS
+push 2 TSS
+mult T
+ST outputnum SSSTSSS
+push 8 SSSTS
+push 2 TSTS div T
+ST outputnum SSSTSSS
+push 8 SSSTS
+push 2 TSTT mod T
+ST outputnum 
+
+

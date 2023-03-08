@@ -17,13 +17,13 @@ let rec trad_instructions instructions oc =
   | Store :: rest       -> Printf.fprintf oc "\tlet val: i32 = stack.pop().unwrap();let addr: i32 = stack.pop().unwrap();memory.insert(addr, val); // store\n" ; trad_instructions rest oc
   | Load :: rest        -> Printf.fprintf oc "\tlet addr = stack.pop().unwrap(); let val = memory[&addr]; stack.push(val); // load\n" ; trad_instructions rest oc
   | Label l :: rest     -> Printf.fprintf oc "\t%s(stack, memory);\n}\nfn %s(stack : &mut Vec<i32>, memory: &mut HashMap<i32, i32>) { // label\n" l l ; trad_instructions rest oc
-  | Call l :: rest      -> Printf.fprintf oc "\t%s(stack, memory);\n}\nfn %s(stack : &mut Vec<i32>, memory: &mut HashMap<i32, i32>) { // call\n" l l; trad_instructions rest oc
+  | Call l :: rest      -> Printf.fprintf oc "\tfunc_refs.push(<name>);\n\t%s(stack, memory);\n}\n<name>(stack : &mut Vec<i32>, memory: &mut HashMap<i32, i32>){ // call\n}" l; trad_instructions rest oc
   | Jump l :: rest      -> Printf.fprintf oc "\t%s(stack, memory); // jump\n" l ; trad_instructions rest oc
   | JumpIfZero l :: rest-> Printf.fprintf oc "\tif stack.pop().unwrap() == 0 {%s(stack, memory);} // jump if zero\n" l ; trad_instructions rest oc
   | JumpIfNeg l :: rest -> Printf.fprintf oc "\tif stack.pop().unwrap() < 0 {%s(stack, memory));} // jump if neg\n" l ; trad_instructions rest oc
-  | EndSub :: rest      -> Printf.fprintf oc "\treturn;\n //end sub routine\n" ; trad_instructions rest oc
+  | EndSub :: rest      -> Printf.fprintf oc "\tlet fct = fct_refs.pop().unwrap();\n\tfct(stack, memory); //end sub routine\n" ; trad_instructions rest oc
   | EndProg :: rest     -> Printf.fprintf oc "\tprocess::exit(0); // end prog\n" ; trad_instructions rest oc
   | OutputChar :: rest  -> Printf.fprintf oc "\tprint!(\"{}\", stack.pop().unwrap() as u8 as char); // output char\n" ; trad_instructions rest oc
-  | OutputNum :: rest   -> Printf.fprintf oc "\tprintln!(\"{}\", stack.pop().unwrap()); // output num\n" ; trad_instructions rest oc
+  | OutputNum :: rest   -> Printf.fprintf oc "\tprint!(\"{}\", stack.pop().unwrap()); // output num\n" ; trad_instructions rest oc
   | ReadChar :: rest    -> Printf.fprintf oc "\tlet mut input = String::new();io::stdin().read_line(&mut input).expect(\"Error: unable to read user char input\");let addr: i32 = stack.pop().unwrap();memory.insert(addr,input.chars().nth(0).unwrap() as i32); // read char\n" ; trad_instructions rest oc
-  | ReadNum :: rest     -> Printf.fprintf oc "READ NUM TODO\n" ; trad_instructions rest oc
+  | ReadNum :: rest     -> Printf.fprintf oc "\tlet mut input = String::new();io::stdin().read_line(&mut input).expect(\"Error: unable to read user char input\");let addr: i32 = stack.pop().unwrap();input.pop();memory.insert(addr, input.parse::<i32>().unwrap()); // read num\n" ; trad_instructions rest oc

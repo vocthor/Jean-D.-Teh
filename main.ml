@@ -25,16 +25,22 @@ let main () =
   let regex = Str.regexp {|.ws|} in 
   let rsfilename = Str.replace_first regex {|.rs|} wsfilename in
   let oc = open_out rsfilename in
-  Printf.fprintf oc "use std::collections::HashMap;\n";
-  Printf.fprintf oc "use std::io;\n\n";
-  Printf.fprintf oc "use std::process;\n\n";
+  Printf.fprintf oc "use std::io;\n";
+  Printf.fprintf oc "use std::process;\n";
+  Printf.fprintf oc "use std::collections::HashMap;\n\n";
   Printf.fprintf oc "fn main() {\n";
-  Printf.fprintf oc "\ttype Binop = fn(&mut Vec<i32>, &mut HashMap<i32, i32>);";
-  Printf.fprintf oc "\tlet mut func_refs : Vec<Binop> = Vec::new();\n";
-  Printf.fprintf oc "\tlet mut stack : Vec<i32> = Vec::new();\n";
-  Printf.fprintf oc "\tlet mut memory: HashMap<i32, i32> = HashMap::new();\n\n";
-  Printf.fprintf oc "\tmain2(&mut stack, &mut memory);\n}\n";
-  Printf.fprintf oc "fn main2(stack: &mut Vec<i32>, memory: &mut HashMap<i32, i32>) {\n";
+  Printf.fprintf oc "\tlet mut ws = Whitespace {\n"; 
+  Printf.fprintf oc "\t\tstack: Vec::new(),\n";
+  Printf.fprintf oc "\t\tmemory: HashMap::new(),\n";
+  Printf.fprintf oc "\t\tcalls: Vec::new(),\n";
+  Printf.fprintf oc "\t};\n\tws.exec();\n}\n\n";
+  Printf.fprintf oc "type Binop = fn(&mut Whitespace);\n\n";
+  Printf.fprintf oc "pub struct Whitespace {\n";
+  Printf.fprintf oc "\tstack: Vec<i32>,\n";
+  Printf.fprintf oc "\tmemory: HashMap<i32,i32>,\n";
+  Printf.fprintf oc "\tcalls: Vec<Binop>,\n}\n\n";
+  Printf.fprintf oc "impl Whitespace {\n";
+  Printf.fprintf oc "\tpub fn exec(&mut self){\n";
   Traductor.trad_instructions instructions oc ;
   close_out oc
 

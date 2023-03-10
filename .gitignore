@@ -1,4 +1,9 @@
 _build/
 main.native
-# test/
-# !*.ws
+
+tests/true/*
+!tests/true/*.ws
+tests/fake/*
+!tests/fake/*.ws
+tests/others/*
+!tests/others/*.*

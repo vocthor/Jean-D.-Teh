@@ -30,7 +30,7 @@ SS ouputchar SSSTST
 push 5 SSSTSTS
 push 10 SSTTSTST
 push -21 SSSTTTS
-push 14 STSSTT
+push 14 STSSTS
 copy 3e T
 ST outputnum SSSTSTS
 push 10 T

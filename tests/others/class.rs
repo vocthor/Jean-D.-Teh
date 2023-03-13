@@ -20,10 +20,7 @@ pub struct Whitespace {
 
 impl Whitespace {
     pub fn run(&mut self) {
-        self.s();
-        self.func_ref.push(s);
-        self.func_ref.push(self.s);
-        self.func_ref.push(self.s());
+        self.func_ref.push(Whitespace::s);
         let fct: Binop = self.func_ref.pop().unwrap();
         fct(self);
     }

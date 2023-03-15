@@ -27,4 +27,4 @@ ST outputnum; T
 SS ouputchar; 
 
 
-endprog;
+endprog; STT error;

@@ -45,7 +45,7 @@ let main () =
   Printf.fprintf oc "pub struct Whitespace {\n";
   Printf.fprintf oc "\tstack: Vec<i32>,\n";
   Printf.fprintf oc "\tmemory: HashMap<i32,i32>,\n";
-  Printf.fprintf oc "\tcalls: Vec<Binop>,\n\n\n";
+  Printf.fprintf oc "\tcalls: Vec<Binop>,\n";
   Printf.fprintf oc "\tsnapshots: Vec<Vec<i32>>,\n}\n\n";
   Printf.fprintf oc "impl Whitespace {\n";
   Printf.fprintf oc "\tpub fn exec(&mut self){\n";

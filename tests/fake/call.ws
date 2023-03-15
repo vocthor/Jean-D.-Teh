@@ -1,17 +1,20 @@
 
 S
-STSST jump_start
-
-SSSSSSSSSS mark_l1
-SSSS push0
-
-T retsub
-
-SSSTSST mark_start
-SSST push1
-
-STSSSSSSSS
+_STSST 
+jump_stsst;
+SS_SSSSSSSS label_ssssssss;
+SS_SS 
+push_0;
 T
-ST
+endsub;
+SS_STSST
+label_stsst; SS_ST
+push_1;
+ST_SSSSSSSS
+jump_ssssssss; T
+ST outputnum; SSSTSTS
+push_10; T
+SS ouputchar;
 
 
+endprog;

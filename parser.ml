@@ -13,20 +13,20 @@ let rec get_value tokens res sign =
   | [] -> error("Number not ended")
   | SPACE :: rest -> get_value rest (res*2) sign
   | TAB :: rest -> get_value rest (res*2 + 1) sign
-  | LINEFEED :: rest -> (sign*res, rest) 
+  | LINEFEED :: rest -> newline () ; (sign*res, rest) 
  
 let get_number tokens =
   match tokens with
   | SPACE :: rest -> get_value rest 0 1
   | TAB :: rest -> get_value rest 0 (-1)
-  | LINEFEED :: rest -> (0,rest)
+  | LINEFEED :: rest -> newline () ; (0,rest)
   | [] -> error("Number not defined")
 
 let rec get_label tokens (res : string) = 
   match tokens with
   | SPACE :: rest -> get_label rest (res^"s")
   | TAB :: rest -> get_label rest (res^"t")
-  | LINEFEED :: rest -> (res, rest)
+  | LINEFEED :: rest -> newline () ; (res, rest)
   | [] -> error("Label not ended")
 
 let rec parse_instruction tokens output =

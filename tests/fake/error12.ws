@@ -1,5 +1,5 @@
 SSSTSTS
-push_10; SSSTSSS
+push_10;  SSSTSSS
 push_8; SSSTS
 push_2 TSSS add; T
 ST outputnum; T
@@ -9,7 +9,7 @@ push_8; SSSTS
 push_2; TSST sub; T
 ST outputnum; T
 SS ouputchar; SSSTSTS
-push_10; SSSTSSS
+push_10; STT error; SSSTSSS
 push_8; SSSTS
 push_2; TSS
 mult; T

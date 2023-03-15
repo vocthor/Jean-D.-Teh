@@ -1,4 +1,4 @@
-SSSTSTS
+STT error; SSSTSTS
 push_10; SSSTSSS
 push_8; SSSTS
 push_2 TSSS add; T

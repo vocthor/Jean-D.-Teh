@@ -1,47 +1,48 @@
-SSTTSTST
-push -21 T
-ST outputnum SSSTSTS
-push 10 T
-SS ouputchar SSSTTTS
-push 14 S
-S dup T
-ST outputnum SSSTSTS
-push 10 T
-SS ouputchar T
-ST outputnum SSSTSTS
-push 10 T
-SS ouputchar SSST
-push 1 SSSTS
-push 2 S
-T swap T
-ST outputnum SSSTSTS
-push 10 T
-SS ouputchar T
-ST outputnum SSSTSTS
-push 10 T
-SS ouputchar SSSTST
-push 5 SSSTSTS
-push 10 S
+SS_TTSTST
+push_-21; T
+ST outputnum; SS_STSTS
+push_10; T
+SS ouputchar; SS_STTTS
+push_14; S
+S dup; T
+ST outputnum; SS_STSTS
+push_10; T
+SS ouputchar; T
+ST outputnum; SS_STSTS
+push_10; T
+SS ouputchar; SS_ST
+push_1; SS_STS
+push_2; S
+T swap; T
+ST outputnum; SS_STSTS
+push_10; T
+SS ouputchar; T
+ST outputnum; SS_STSTS
+push_10; T
+SS ouputchar; SS_STST
+push_5; SS_STSTS
+push_10; S
 
-discard T
-ST outputnum SSSTSTS
-push 10 T
-SS ouputchar SSSTST
-push 5 SSSTSTS
-push 10 SSTTSTST
-push -21 SSSTTTS
-push 14 STSSTS
-copy 3e T
-ST outputnum SSSTSTS
-push 10 T
-SS ouputchar ST
-STS
-slide 2 T
-ST outputnum SSSTSTS
-push 10 T
-SS ouputchar T
-ST outputnum SSSTSTS
-push 10 T
-SS ouputchar 
+discard; T
+ST outputnum; SS_STSTS
+push_10; T
+SS ouputchar; SS_STST
+push_5; SS_STSTS
+push_10; SS_TTSTST
+push_-21; SS_STTTS
+push_14; STS_STS
+copy_2_3e; T
+ST outputnum; SS_STSTS
+push_10; T
+SS ouputchar; ST
+_STS
+slide_2; T
+ST outputnum; SS_STSTS
+push_10; T
+SS ouputchar; T
+ST outputnum; SS_STSTS
+push_10; T
+SS ouputchar; 
 
 
+endprog;

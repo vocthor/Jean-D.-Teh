@@ -17,7 +17,7 @@ ST outputnum; T
 SS ouputchar; SSSTSTS
 push_10; SSSTSSS
 push_8; SSSTS
-push_2; TSTS div; T
+push_2; TSTS div; STT error; T
 ST outputnum; T
 SS ouputchar; SSSTSTS
 push_10; SSSTSSS

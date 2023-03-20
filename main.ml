@@ -39,14 +39,12 @@ let main () =
   Printf.fprintf oc "\t\tstack: Vec::new(),\n";
   Printf.fprintf oc "\t\tmemory: HashMap::new(),\n";
   Printf.fprintf oc "\t\tcalls: Vec::new(),\n";
-  Printf.fprintf oc "\t\tsnapshots: Vec::new(),\n";
   Printf.fprintf oc "\t};\n\tws.exec();\n}\n\n";
   Printf.fprintf oc "type Binop = fn(&mut Whitespace);\n\n";
   Printf.fprintf oc "pub struct Whitespace {\n";
   Printf.fprintf oc "\tstack: Vec<i32>,\n";
   Printf.fprintf oc "\tmemory: HashMap<i32,i32>,\n";
-  Printf.fprintf oc "\tcalls: Vec<Binop>,\n";
-  Printf.fprintf oc "\tsnapshots: Vec<Vec<i32>>,\n}\n\n";
+  Printf.fprintf oc "\tcalls: Vec<Binop>,\n}\n\n";
   Printf.fprintf oc "impl Whitespace {\n";
   Printf.fprintf oc "\tpub fn exec(&mut self){\n";
   Traductor.trad_instructions instructions oc ;

@@ -21,11 +21,11 @@ let rec trad_instructions instructions oc =
   | Store :: rest       -> Printf.fprintf oc "\t\tlet val: i32 = self.stack.pop().unwrap(); let addr: i32 = self.stack.pop().unwrap(); self.memory.insert(addr, val); // store\n" ; trad_instructions rest oc
   | Load :: rest        -> Printf.fprintf oc "\t\tlet addr = self.stack.pop().unwrap(); let val = self.memory[&addr]; self.stack.push(val); // load\n" ; trad_instructions rest oc
   | Label l :: rest     -> Printf.fprintf oc "\t\tself.%s();\n\t}\n\tfn %s(&mut self) { // label\n" l l ; trad_instructions rest oc
-  | Call l :: rest      -> Printf.fprintf oc "\t\tself.calls.push(Whitespace::call_%s);\n\t\tself.snapshots.push(self.stack.clone());\n\t\tself.%s();\n\t}\n\tfn call_%s(&mut self){ // call\n" (string_of_int !call_number) l (string_of_int !call_number); newcall (); trad_instructions rest oc
+  | Call l :: rest      -> Printf.fprintf oc "\t\tself.calls.push(Whitespace::call_%s);\n\t\tself.%s();\n\t}\n\tfn call_%s(&mut self){ // call\n" (string_of_int !call_number) l (string_of_int !call_number); newcall (); trad_instructions rest oc
   | Jump l :: rest      -> Printf.fprintf oc "\t\tself.%s(); // jump\n" l ; trad_instructions rest oc
   | JumpIfZero l :: rest-> Printf.fprintf oc "\t\tif self.stack.pop().unwrap() == 0 {self.%s();} // jump if zero\n" l ; trad_instructions rest oc
   | JumpIfNeg l :: rest -> Printf.fprintf oc "\t\tif self.stack.pop().unwrap() < 0 {self.%s();} // jump if neg\n" l ; trad_instructions rest oc
-  | EndSub :: rest      -> Printf.fprintf oc "\t\tlet fct:  Binop = self.calls.pop().unwrap();\n\t\tself.stack=self.snapshots.pop().unwrap();\n\t\tfct(self); //end sub routine\n" ; trad_instructions rest oc
+  | EndSub :: rest      -> Printf.fprintf oc "\t\tlet fct:  Binop = self.calls.pop().unwrap();\n\t\tfct(self); //end sub routine\n" ; trad_instructions rest oc
   | EndProg :: rest     -> Printf.fprintf oc "\t\tprocess::exit(0); // end prog\n" ; trad_instructions rest oc
   | OutputChar :: rest  -> Printf.fprintf oc "\t\tprint!(\"{}\", self.stack.pop().unwrap() as u8 as char); stdout().flush().unwrap(); // output char\n" ; trad_instructions rest oc
   | OutputNum :: rest   -> Printf.fprintf oc "\t\tprint!(\"{}\", self.stack.pop().unwrap()); stdout().flush().unwrap(); // output num\n" ; trad_instructions rest oc
